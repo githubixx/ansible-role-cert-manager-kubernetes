@@ -1,0 +1,28 @@
+---
+# Helm chart version
+cert_manager_chart_version: "v1.1.0"
+
+# Helm release name
+cert_manager_release_name: "cert-manager"
+
+# Helm repository name
+cert_manager_repo_name: "jetstack"
+
+# Helm chart name
+cert_manager_chart_name: "{{ cert_manager_repo_name }}/{{ cert_manager_release_name }}"
+
+# Helm chart URL
+cert_manager_chart_url: "https://charts.jetstack.io"
+
+# Kubernetes namespace where cert-manager resources should be installed
+cert_manager_namespace: "cert-manager"
+
+# The following table contains the configurable parameters of the cert-manager
+# chart and their default values. For all possible values see:
+# https://artifacthub.io/packages/helm/jetstack/cert-manager#configuration
+# But for most users "installCRDs=true" should be sufficient.
+# If true, CRD resources will be installed as part of the Helm chart.
+# If enabled, when uninstalling CRD resources will be deleted causing all
+# installed custom resources to be DELETED
+cert_manager_values:
+  - installCRDs=true
