@@ -1,0 +1,29 @@
+---
+- name: Ensure namespace
+  k8s:
+    name: "{{ cert_manager_namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+  delegate_to: 127.0.0.1
+  run_once: True
+
+- name: Register if Helm repository is installed
+  command: helm search repo {{ cert_manager_chart_name }} -n {{ cert_manager_namespace }}
+  register: cert_manager_repo_installed
+  changed_when: False
+  delegate_to: 127.0.0.1
+  run_once: True
+
+- name: Add Helm repository
+  command: helm repo add {{ cert_manager_repo_name }} {{ cert_manager_chart_url }}
+  changed_when: False
+  delegate_to: 127.0.0.1
+  run_once: True
+  when: "cert_manager_repo_installed.stdout.find(cert_manager_chart_name) == -1"
+
+- name: Update local Helm chart repository cache
+  command: helm repo update -n {{ cert_manager_namespace }}
+  changed_when: False
+  delegate_to: 127.0.0.1
+  run_once: True

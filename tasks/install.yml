@@ -1,0 +1,37 @@
+---
+- name: Include prerequisites
+  include_tasks: "tasks/prerequisites.yml"
+
+- name: Create values
+  set_fact:
+    cert_manager_values_rendered="{% for option in cert_manager_values %}--set {{ option }} {% endfor %}"
+
+- name: Install release
+  shell:
+    set -o errexit
+    set -o pipefail
+    set -o nounset
+
+    helm install {{ cert_manager_release_name }} {{ cert_manager_chart_name }}
+    --namespace {{ cert_manager_namespace }}
+    --version {{ cert_manager_chart_version }}
+    {{ cert_manager_values_rendered }}
+
+    exit 0
+  run_once: True
+  delegate_to: 127.0.0.1
+  changed_when: False
+  args:
+    executable: "/bin/bash"
+
+- name: Waiting until cert-manager-webhooks pod is ready
+  k8s_info:
+    api_version: apps/v1
+    kind: Deployment
+    namespace: "{{ cert_manager_namespace }}"
+    label_selectors:
+      - app=webhook
+  register: cert_manager_webhook_deployment_status
+  until: (cert_manager_webhook_deployment_status.resources[0].status.readyReplicas | default(0) | int ) >= 1
+  retries: 30
+  delay: 15

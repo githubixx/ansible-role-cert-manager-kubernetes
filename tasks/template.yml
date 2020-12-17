@@ -1,0 +1,34 @@
+---
+- name: Include prerequisites
+  include_tasks: "tasks/prerequisites.yml"
+
+- name: Create values
+  set_fact:
+    cert_manager_values_rendered="{% for option in cert_manager_values %}--set {{ option }} {% endfor %}"
+
+- name: Render template
+  shell:
+    set -o errexit
+    set -o pipefail
+    set -o nounset
+
+    helm template {{ cert_manager_release_name }} {{ cert_manager_chart_name }}
+    --namespace {{ cert_manager_namespace }}
+    --version {{ cert_manager_chart_version }}
+    {{ cert_manager_values_rendered }}
+
+    exit 0
+  run_once: True
+  delegate_to: 127.0.0.1
+  register: cert_manager_template
+  changed_when: False
+  args:
+    executable: "/bin/bash"
+
+- name: Output rendered template
+  debug:
+    msg: "{{ cert_manager_template.stdout }}"
+  run_once: True
+  delegate_to: 127.0.0.1
+  changed_when: False
+
