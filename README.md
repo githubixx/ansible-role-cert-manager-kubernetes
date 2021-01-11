@@ -53,7 +53,7 @@ Usage
 
 First check if you want to change any of the default values in `default/main.yml`. As usual those values can be overridden in `host_vars` or `group_vars`. Normally there is no need to change that much. Besides the `cert_manager_chart_version` you might want do add a few options to `cert_manager_values`. It contains the configurable parameters of the cert-manager Helm chart. The list is submitted "as is" to `helm` binary for `template`, `install` or `upgrade` commands.
 
-The default action is to just render the Kubernetes resources YAML file after replacing all Jinja2 variables and stuff like that (that means not specifying any value via `--extra-vars cm_action=...` to `ansible-playbook`). In the `Example Playbook` section below there is an `Example 2 (assign tag to role)`. The role `githubixx.cert_manager_kubernetes` has a tag `role-cert-manager-kubernetes` assigned.
+The default action is to just render the Kubernetes resources YAML file after replacing all Jinja2 variables and stuff like that (that means not specifying any value via `--extra-vars action=...` to `ansible-playbook`). In the `Example Playbook` section below there is an `Example 2 (assign tag to role)`. The role `githubixx.cert_manager_kubernetes` has a tag `role-cert-manager-kubernetes` assigned.
 
 So to render the YAML files the WOULD be applied (nothing will be installed at this time) and the playbook is called `k8s.yml` execute the following command:
 
