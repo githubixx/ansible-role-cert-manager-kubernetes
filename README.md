@@ -66,7 +66,7 @@ One of the final tasks is called `TASK [githubixx.cert-manager-kubernetes : Outp
 If the rendered output contains everything you need, the role can be installed which finally deploys cert-manager (still assuming the playbook file is called `k8s.yml` - if not please adjust accordingly):
 
 ```bash
-ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars cm_action=install k8s.yml
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=install k8s.yml
 ```
 
 To check if everything was deployed use the usual `kubectl` commands like `kubectl -n <cert_manager_namespace> get pods -o wide`. Before the playbook finishes it waits for the first `cert-manager-webhooks` pod to become ready.
@@ -74,13 +74,13 @@ To check if everything was deployed use the usual `kubectl` commands like `kubec
 Sooner or later there will be a new cert-manager version and you want to upgrade. Before doing the upgrade read the cert-manager [upgrade guide](https://cert-manager.io/docs/installation/upgrading/) carefully! If everything is in place you basically only need to change `cert_manager_chart_version` variable e.g. from `v1.1.0` to `v1.2.0` to upgrade from `v1.1.0` to `v1.2.0`. So to do the update run
 
 ```bash
-ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars cm_action=upgrade k8s.yml
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=upgrade k8s.yml
 ```
 
 And finally if you want to get rid of cert-manager you can delete all resources (this of course deletes EVERYTHING cert-manager related and this might also include certificates and secrets cert-manager already created - so be careful!):
 
 ```bash
-ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars cm_action=delete k8s.yml
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete k8s.yml
 ```
 
 TODO
