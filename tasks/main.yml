@@ -40,5 +40,23 @@
     - action is defined
     - '"delete" in action'
 
+- name: Set action to install issuer
+  set_fact:
+    deploy_action: "install-issuer"
+  delegate_to: 127.0.0.1
+  run_once: True
+  when:
+    - action is defined
+    - '"install-issuer" in action'
+
+- name: Set action to delete issuer
+  set_fact:
+    deploy_action: "delete-issuer"
+  delegate_to: 127.0.0.1
+  run_once: True
+  when:
+    - action is defined
+    - '"delete-issuer" in action'
+
 - name: Include tasks to execute requested action
   include_tasks: "tasks/{{ deploy_action|lower }}.yml"

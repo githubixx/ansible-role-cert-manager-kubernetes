@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**2.1.0+1.1.0**
+
+- the role now supports to install "ClusterIssuer" for Let's Encrypt staging and production (see "cert_manager_le_clusterissuer_options" variable)
+
 **2.0.0+1.1.0**
 
 - rename extra vars `cm_(install|upgrade|delete)=true` to `action=(install|upgrade|delete)`
