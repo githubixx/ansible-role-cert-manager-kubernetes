@@ -26,3 +26,35 @@ cert_manager_namespace: "cert-manager"
 # installed custom resources to be DELETED
 cert_manager_values:
   - installCRDs=true
+
+# To install "ClusterIssuer" for Let's Encrypt (LE) "cert_manager_le_clusterissuer_options"
+# needs to be defined. The variable contains a list of hashes and can be defined
+# in "group_vars/all.yml" e.g.
+#
+# name:   Defines the name of the "ClusterIssuer"
+# email:  Use a valid e-mail address to be alerted by LE in case a certificate
+#         expires
+# server: Hostname part of the LE URL
+# private_key_secret_ref_name:  Name of the secret which stores the private key
+# solvers_http01_ingress_class: Value of "kubernetes.io/ingress.class" annotation.
+#                               Depends on you ingress controller. Common values
+#                               are "traefik" for Traefik or "nginx" for nginx.
+#
+# Besides "email" the following values can be used as is and will create valid
+# "ClusterIssuer" for Let's Encrypt staging and production. Only "email" needs
+# to be adjusted if Traefik is used as ingress controller. For other ingress
+# controllers "solvers_http01_ingress_class" needs to be adjusted too. Currently
+# only "ClusterIssuer" and "http01" solver is implemented. For definition also
+# see "tasks/install-issuer.yml".
+#
+# cert_manager_le_clusterissuer_options:
+#   - name: letsencrypt-prod
+#     email: insert@your-e-mail-address.here
+#     server: acme-v02
+#     private_key_secret_ref_name: letsencrypt-account-key
+#     solvers_http01_ingress_class: "traefik"
+#   - name: letsencrypt-staging
+#     email: insert@your-e-mail-address.here
+#     server: acme-staging-v02
+#     private_key_secret_ref_name: letsencrypt-staging-account-key
+#     solvers_http01_ingress_class: "traefik"

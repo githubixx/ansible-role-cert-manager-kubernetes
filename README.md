@@ -46,6 +46,38 @@ cert_manager_namespace: "cert-manager"
 # installed custom resources to be DELETED.
 cert_manager_values:
   - installCRDs=true
+
+# To install "ClusterIssuer" for Let's Encrypt (LE) "cert_manager_le_clusterissuer_options"
+# needs to be defined. The variable contains a list of hashes and can be defined
+# in "group_vars/all.yml" e.g.
+#
+# name:   Defines the name of the "ClusterIssuer"
+# email:  Use a valid e-mail address to be alerted by LE in case a certificate
+#         expires
+# server: Hostname part of the LE URL
+# private_key_secret_ref_name:  Name of the secret which stores the private key
+# solvers_http01_ingress_class: Value of "kubernetes.io/ingress.class" annotation.
+#                               Depends on you ingress controller. Common values
+#                               are "traefik" for Traefik or "nginx" for nginx.
+#
+# Besides "email" the following values can be used as is and will create valid
+# "ClusterIssuer" for Let's Encrypt staging and production. Only "email" needs
+# to be adjusted if Traefik is used as ingress controller. For other ingress
+# controllers "solvers_http01_ingress_class" needs to be adjusted too. Currently
+# only "ClusterIssuer" and "http01" solver is implemented. For definition also
+# see "tasks/install-issuer.yml".
+#
+# cert_manager_le_clusterissuer_options:
+#   - name: letsencrypt-prod
+#     email: insert@your-e-mail-address.here
+#     server: acme-v02
+#     private_key_secret_ref_name: letsencrypt-account-key
+#     solvers_http01_ingress_class: "traefik"
+#   - name: letsencrypt-staging
+#     email: insert@your-e-mail-address.here
+#     server: acme-staging-v02
+#     private_key_secret_ref_name: letsencrypt-staging-account-key
+#     solvers_http01_ingress_class: "traefik"
 ```
 
 Usage
@@ -53,7 +85,7 @@ Usage
 
 First check if you want to change any of the default values in `default/main.yml`. As usual those values can be overridden in `host_vars` or `group_vars`. Normally there is no need to change that much. Besides the `cert_manager_chart_version` you might want do add a few options to `cert_manager_values`. It contains the configurable parameters of the cert-manager Helm chart. The list is submitted "as is" to `helm` binary for `template`, `install` or `upgrade` commands.
 
-The default action is to just render the Kubernetes resources YAML file after replacing all Jinja2 variables and stuff like that (that means not specifying any value via `--extra-vars cm_action=...` to `ansible-playbook`). In the `Example Playbook` section below there is an `Example 2 (assign tag to role)`. The role `githubixx.cert_manager_kubernetes` has a tag `role-cert-manager-kubernetes` assigned.
+The default action is to just render the Kubernetes resources YAML file after replacing all Jinja2 variables and stuff like that (that means not specifying any value via `--extra-vars action=...` to `ansible-playbook`). In the `Example Playbook` section below there is an `Example 2 (assign tag to role)`. The role `githubixx.cert_manager_kubernetes` has a tag `role-cert-manager-kubernetes` assigned.
 
 So to render the YAML files the WOULD be applied (nothing will be installed at this time) and the playbook is called `k8s.yml` execute the following command:
 
@@ -66,7 +98,7 @@ One of the final tasks is called `TASK [githubixx.cert-manager-kubernetes : Outp
 If the rendered output contains everything you need, the role can be installed which finally deploys cert-manager (still assuming the playbook file is called `k8s.yml` - if not please adjust accordingly):
 
 ```bash
-ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars cm_action=install k8s.yml
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=install k8s.yml
 ```
 
 To check if everything was deployed use the usual `kubectl` commands like `kubectl -n <cert_manager_namespace> get pods -o wide`. Before the playbook finishes it waits for the first `cert-manager-webhooks` pod to become ready.
@@ -74,19 +106,78 @@ To check if everything was deployed use the usual `kubectl` commands like `kubec
 Sooner or later there will be a new cert-manager version and you want to upgrade. Before doing the upgrade read the cert-manager [upgrade guide](https://cert-manager.io/docs/installation/upgrading/) carefully! If everything is in place you basically only need to change `cert_manager_chart_version` variable e.g. from `v1.1.0` to `v1.2.0` to upgrade from `v1.1.0` to `v1.2.0`. So to do the update run
 
 ```bash
-ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars cm_action=upgrade k8s.yml
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=upgrade k8s.yml
 ```
 
 And finally if you want to get rid of cert-manager you can delete all resources (this of course deletes EVERYTHING cert-manager related and this might also include certificates and secrets cert-manager already created - so be careful!):
 
 ```bash
-ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars cm_action=delete k8s.yml
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete k8s.yml
+```
+
+Issuer
+------
+
+The role currently supports deploying a [ClusterIssuer](https://cert-manager.io/docs/concepts/issuer/) for [Let's Encrypt](https://letsencrypt.org/) (LE) for LE staging and production. The most relevant variable in this case is `cert_manager_le_clusterissuer_options`. Please see the role variables above for more information.
+
+After `cert_manager_le_clusterissuer_options` variable is adjusted accordingly the `ClusterIssuer` can be installed:
+
+```bash
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=install-issuer k8s.yml
+```
+
+After deploying the issuer the first time it takes a little bit until they are ready. To figure out if they are ready `kubectl` can be used:
+
+```bash
+kubectl get clusterissuers.cert-manager.io
+
+NAME                  READY   AGE
+letsencrypt-prod      True    10m
+letsencrypt-staging   True    11m
+```
+
+Afterwards a certificate can be issued. This happens outside of this Ansible role. E.g. to get a certificate for domain `www.domain.name` from Let's Encrypt staging server (this one is only for testing and doesn't issue a valid certificate that browser will accept) create a YAML file (e.g. domain-name.yaml) like this:
+
+```yaml
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cert-name
+  namespace: namespace-name
+spec:
+  commonName: www.domain.name
+  secretName: secret-name
+  dnsNames:
+    - www.domain.name
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+```
+
+After changing the values to your needs, apply this file with `kubectl apply -f domain-name.yaml`.
+
+If you request a `(Cluster)Issuer` or a `Certificate` you can watch `cert-manager` logs to see what's going on e.g. (of course replace `cert-manager-76d899dd6c-8q8b` with the name of your `cert-manager` pod and in case you use a different namespace for `cert-manager` also change the namespace accordingly):
+
+```bash
+kubectl -n cert-manager logs -f --tail=50 cert-manager-76d899dd6c-8q8b
+```
+
+To get information about a `Certificate` this command can be used:
+
+```bash
+kubectl -n your-namespace get certificate cert-name -o yaml
+```
+
+And in case you want to delete the `ClusterIsser` use:
+
+```bash
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete-issuer k8s.yml
 ```
 
 TODO
 ----
 
-- add possibility to manage cert-manager resources like `(Cluster)Issuer` and `Certificate` esp. for ACME (Let's Encrypt)
 - add option to install cert-manager plugin for `kubectl`
 - add more error checks
 

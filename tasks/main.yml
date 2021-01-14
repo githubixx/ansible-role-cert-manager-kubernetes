@@ -19,8 +19,8 @@
   delegate_to: 127.0.0.1
   run_once: True
   when:
-    - cm_action is defined
-    - '"install" in cm_action'
+    - action is defined
+    - '"install" in action'
 
 - name: Set action to upgrade via Helm
   set_fact:
@@ -28,8 +28,8 @@
   delegate_to: 127.0.0.1
   run_once: True
   when:
-    - cm_action is defined
-    - '"upgrade" in cm_action'
+    - action is defined
+    - '"upgrade" in action'
 
 - name: Set action to delete via Helm
   set_fact:
@@ -37,8 +37,26 @@
   delegate_to: 127.0.0.1
   run_once: True
   when:
-    - cm_action is defined
-    - '"delete" in cm_action'
+    - action is defined
+    - '"delete" in action'
+
+- name: Set action to install issuer
+  set_fact:
+    deploy_action: "install-issuer"
+  delegate_to: 127.0.0.1
+  run_once: True
+  when:
+    - action is defined
+    - '"install-issuer" in action'
+
+- name: Set action to delete issuer
+  set_fact:
+    deploy_action: "delete-issuer"
+  delegate_to: 127.0.0.1
+  run_once: True
+  when:
+    - action is defined
+    - '"delete-issuer" in action'
 
 - name: Include tasks to execute requested action
   include_tasks: "tasks/{{ deploy_action|lower }}.yml"

@@ -1,0 +1,21 @@
+---
+- name: Install Let's Encrypt ClusterIssuer
+  k8s:
+    state: present
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: "{{ item.name }}"
+      spec:
+        acme:
+          email: "{{ item.email }}"
+          server: "https://{{ item.server }}.api.letsencrypt.org/directory"
+          privateKeySecretRef:
+            name: "{{ item.private_key_secret_ref_name }}"
+          solvers:
+            - http01:
+                ingress:
+                  class: "{{ item.solvers_http01_ingress_class }}"
+  loop: "{{ cert_manager_le_clusterissuer_options }}"
+  when: cert_manager_le_clusterissuer_options is defined
