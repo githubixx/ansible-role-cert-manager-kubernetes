@@ -115,6 +115,66 @@ And finally if you want to get rid of cert-manager you can delete all resources 
 ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete k8s.yml
 ```
 
+Issuer
+------
+
+The role currently supports deploying a [ClusterIssuer](https://cert-manager.io/docs/concepts/issuer/) for [Let's Encrypt](https://letsencrypt.org/) (LE) for LE staging and production. The most relevant variable in this case is `cert_manager_le_clusterissuer_options`. Please see the role variables above for more information.
+
+After `cert_manager_le_clusterissuer_options` variable is adjusted accordingly the `ClusterIssuer` can be installed:
+
+```bash
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=install-issuer k8s.yml
+```
+
+After deploying the issuer the first time it takes a little bit until they are ready. To figure out if they are ready `kubectl` can be used:
+
+```bash
+kubectl get clusterissuers.cert-manager.io
+
+NAME                  READY   AGE
+letsencrypt-prod      True    10m
+letsencrypt-staging   True    11m
+```
+
+Afterwards a certificate can be issued. This happens outside of this Ansible role. E.g. to get a certificate for domain `www.domain.name` from Let's Encrypt staging server (this one is only for testing and doesn't issue a valid certificate that browser will accept) create a YAML file (e.g. domain-name.yaml) like this:
+
+```yaml
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cert-name
+  namespace: namespace-name
+spec:
+  commonName: www.domain.name
+  secretName: secret-name
+  dnsNames:
+    - www.domain.name
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+```
+
+After changing the values to your needs, apply this file with `kubectl apply -f domain-name.yaml`.
+
+If you request a `(Cluster)Issuer` or a `Certificate` you can watch `cert-manager` logs to see what's going on e.g. (of course replace `cert-manager-76d899dd6c-8q8b` with the name of your `cert-manager` pod and in case you use a different namespace for `cert-manager` also change the namespace accordingly):
+
+```bash
+kubectl -n cert-manager logs -f --tail=50 cert-manager-76d899dd6c-8q8b
+```
+
+To get information about a `Certificate` this command can be used:
+
+```bash
+kubectl -n your-namespace get certificate cert-name -o yaml
+```
+
+And in case you want to delete the `ClusterIsser` use:
+
+```bash
+ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete-issuer k8s.yml
+```
+
 TODO
 ----
 
