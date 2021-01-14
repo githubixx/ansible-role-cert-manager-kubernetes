@@ -57,7 +57,7 @@ cert_manager_values:
 # server: Hostname part of the LE URL
 # private_key_secret_ref_name:  Name of the secret which stores the private key
 # solvers_http01_ingress_class: Value of "kubernetes.io/ingress.class" annotation.
-#                               Depends on you ingress controller. Common values
+#                               Depends on your ingress controller. Common values
 #                               are "traefik" for Traefik or "nginx" for nginx.
 #
 # Besides "email" the following values can be used as is and will create valid
