@@ -6,7 +6,7 @@ This Ansible role installs [cert-manager](https://cert-manager.io/) on a Kuberne
 Versions
 --------
 
-I tag every release and try to stay with [semantic versioning](http://semver.org). If you want to use the role I recommend to checkout the latest tag. The master branch is basically development while the tags mark stable releases. But in general I try to keep master in good shape too. A tag `1.0.0+1.1.0` means this is release `1.0.0` of this role and it contains cert-manager chart version `1.1.0`. If the role itself changes `X.Y.Z` before `+` will increase. If the cert-manager chart version changes `X.Y.Z` after `+` will increase too. This allows to tag bugfixes and new major versions of the role while it's still developed for a specific cert-manager release.
+I tag every release and try to stay with [semantic versioning](http://semver.org). If you want to use the role I recommend to checkout the latest tag. The master branch is basically development while the tags mark stable releases. But in general I try to keep master in good shape too. A tag `2.1.0+1.3.1` means this is release `2.1.0` of this role and it contains cert-manager chart version `1.3.1`. If the role itself changes `X.Y.Z` before `+` will increase. If the cert-manager chart version changes `X.Y.Z` after `+` will increase too. This allows to tag bugfixes and new major versions of the role while it's still developed for a specific cert-manager release.
 
 Requirements
 ------------
@@ -20,7 +20,7 @@ Role Variables
 
 ```yaml
 # Helm chart version
-cert_manager_chart_version: "v1.1.0"
+cert_manager_chart_version: "v1.3.1"
 
 # Helm release name
 cert_manager_release_name: "cert-manager"

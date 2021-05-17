@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**2.1.0+1.3.1**
+
+- update cert-manager to `v1.3.1`
+
 **2.0.0+1.1.0**
 
 - rename extra vars `cm_(install|upgrade|delete)=true` to `action=(install|upgrade|delete)`
@@ -8,4 +12,4 @@ Changelog
 
 **1.0.0+1.1.0**
 
-- initial commit for cert-manager v1.1.0
+- initial commit for cert-manager `v1.1.0`
