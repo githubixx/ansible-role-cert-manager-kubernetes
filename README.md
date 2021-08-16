@@ -39,7 +39,7 @@ cert_manager_namespace: "cert-manager"
 
 # The following list contains the configurable parameters of the cert-manager
 # Helm chart. For all possible values see:
-# https://artifacthub.io/packages/helm/jetstack/cert-manager#configuration
+# https://artifacthub.io/packages/helm/cert-manager/cert-manager#configuration
 # But for most users "installCRDs=true" should be sufficient.
 # If true, CRD resources will be installed as part of the Helm chart.
 # If enabled, when uninstalling CRD resources will be deleted causing all
