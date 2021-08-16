@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**2.2.0+1.5.1**
+
+- update cert-manager to `v1.5.1`
+
 **2.1.0+1.3.1**
 
 - update cert-manager to `v1.3.1`
