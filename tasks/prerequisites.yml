@@ -1,10 +1,14 @@
 ---
 - name: Ensure namespace
   k8s:
-    name: "{{ cert_manager_namespace }}"
-    api_version: v1
-    kind: Namespace
     state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ cert_manager_namespace }}"
+        labels:
+          cert-manager.io/disable-validation: "true"
   delegate_to: 127.0.0.1
   run_once: True
 

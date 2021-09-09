@@ -1,6 +1,6 @@
 ---
 # Helm chart version
-cert_manager_chart_version: "v1.5.1"
+cert_manager_chart_version: "v1.5.3"
 
 # Helm release name
 cert_manager_release_name: "cert-manager"
@@ -26,6 +26,8 @@ cert_manager_namespace: "cert-manager"
 # installed custom resources to be DELETED
 cert_manager_values:
   - installCRDs=true
+  - global.leaderElection.namespace="{{ cert_manager_namespace }}"
+  - startupapicheck.enabled=false
 
 # To install "ClusterIssuer" for Let's Encrypt (LE) "cert_manager_le_clusterissuer_options"
 # needs to be defined. The variable contains a list of hashes and can be defined
