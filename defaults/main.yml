@@ -39,6 +39,7 @@ cert_manager_values:
 # TLS certificate has the correct DNS names `--dynamic-serving-dns-names`
 # option is specified too. It can be a list of DNS names acutally. So you can
 # also add fully qualified domain names (FQDN) if you want of course.
+# (see also: https://github.com/jetstack/cert-manager/issues/2602)
 #  - webhook.securePort="30001"
 #  - webhook.hostNetwork=true
 #  - webhook.url.host="worker:30001"
