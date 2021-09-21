@@ -47,7 +47,23 @@ cert_manager_namespace: "cert-manager"
 cert_manager_values:
   - installCRDs=true
   - global.leaderElection.namespace="{{ cert_manager_namespace }}"
-  - startupapicheck.enabled=false
+
+# If your Kubernetes control plane (`kube-apiserver` e.g.) has no route to the
+# Pods and Services you can configure the "cert-manager-webhook" container to
+# also listen on the host network which the controller and worker nodes share.
+# So in the example above the cert-manager webhook service will listen on
+# port "30001" in the pod network space and the host network. And the
+# "webhook.url.host" option specifies that the control plane should connect
+# to the webhook by connecting to "worker:30001" (of course you need to replace
+# "worker" with a real hostname e.g.). And to make sure that the webhook
+# TLS certificate has the correct DNS names `--dynamic-serving-dns-names`
+# option is specified too. It can be a list of DNS names acutally. So you can
+# also add fully qualified domain names (FQDN) if you want of course.
+# (see also: https://github.com/jetstack/cert-manager/issues/2602)
+#  - webhook.securePort="30001"
+#  - webhook.hostNetwork=true
+#  - webhook.url.host="worker:30001"
+#  - webhook.extraArgs="{--dynamic-serving-dns-names=worker}"
 
 # To install "ClusterIssuer" for Let's Encrypt (LE) "cert_manager_le_clusterissuer_options"
 # needs to be defined. The variable contains a list of hashes and can be defined
