@@ -180,8 +180,8 @@ ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete-
 TODO
 ----
 
-[] add option to install cert-manager plugin for `kubectl`
-[] add more error checks
+- [] add option to install cert-manager plugin for `kubectl`
+- [] add more error checks
 
 Example Playbook
 ----------------

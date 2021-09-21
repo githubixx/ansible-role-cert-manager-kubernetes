@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+**4.0.0+1.5.3**
+
+- remove `startupapicheck.enabled=false` from `cert_manager_values` (should enabled by default and only disabled in case of problems)
+- some documentation updates
+
 **3.0.0+1.5.3**
 
 - update cert-manager to `v1.5.3`
