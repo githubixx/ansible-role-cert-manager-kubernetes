@@ -18,9 +18,8 @@
     {{ cert_manager_values_rendered }}
 
     exit 0
-  run_once: True
+  run_once: true
   delegate_to: 127.0.0.1
-  changed_when: False
+  changed_when: false
   args:
     executable: "/bin/bash"
-
