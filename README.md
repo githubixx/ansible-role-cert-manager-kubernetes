@@ -20,7 +20,7 @@ Role Variables
 
 ```yaml
 # Helm chart version
-cert_manager_chart_version: "v1.5.3"
+cert_manager_chart_version: "v1.6.1"
 
 # Helm release name
 cert_manager_release_name: "cert-manager"
