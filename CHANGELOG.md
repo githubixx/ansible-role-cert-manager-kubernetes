@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+**5.0.1+1.6.1**
+
+- make ansible-lint happy
+- remove unneeded directories
+
 **5.0.0+1.6.1**
 
 - update cert-manager to `v1.6.1`
