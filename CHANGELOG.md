@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**5.0.0+1.6.1**
+
+- update cert-manager to `v1.6.1`
+
 **4.0.1+1.5.3**
 
 - fix README + add link to [Internal error occurred: failed calling webhook "webhook.cert-manager.io": Post https://cert-manager-webhook.cert-manager.svc:443/mutate?timeout=30s: net/http: TLS handshake timeout](https://github.com/jetstack/cert-manager/issues/2602) issue
