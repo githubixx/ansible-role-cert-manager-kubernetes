@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**7.0.0+1.9.1**
+
+- update cert-manager to `v1.9.1`
+
 **6.0.0+1.7.1**
 
 - update cert-manager to `v1.7.1` (**NOTE**: Please also read [cert-manager release notes for v1.7.0](https://github.com/cert-manager/cert-manager/releases/tag/v1.7.0) as this release removes deprecated APIs e.g. cert-manager API versions `v1alpha2`, `v1alpha3`, and `v1beta1`. If you use `v1` already then the upgrade shouldn't be much of a problem.)
