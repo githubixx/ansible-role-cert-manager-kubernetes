@@ -62,7 +62,7 @@ cert_manager_values:
 # to the webhook by connecting to "worker:30001" (of course you need to replace
 # "worker" with a real hostname e.g.). And to make sure that the webhook
 # TLS certificate has the correct DNS names `--dynamic-serving-dns-names`
-# option is specified too. It can be a list of DNS names acutally. So you can
+# option is specified too. It can be a list of DNS names actually. So you can
 # also add fully qualified domain names (FQDN) if you want of course.
 # (see also: https://github.com/jetstack/cert-manager/issues/2602)
 #  - webhook.securePort="30001"
@@ -192,7 +192,7 @@ To get information about a `Certificate` this command can be used:
 kubectl -n your-namespace get certificate cert-name -o yaml
 ```
 
-And in case you want to delete the `ClusterIsser` use:
+And in case you want to delete the `ClusterIssuer` use:
 
 ```bash
 ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete-issuer k8s.yml
@@ -234,4 +234,3 @@ Author Information
 ------------------
 
 [http://www.tauceti.blog](http://www.tauceti.blog)
-
