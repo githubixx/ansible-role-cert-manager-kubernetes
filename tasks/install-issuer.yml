@@ -1,6 +1,6 @@
 ---
 - name: Install Let's Encrypt ClusterIssuer
-  k8s:
+  kubernetes.core.k8s:
     state: present
     definition:
       apiVersion: cert-manager.io/v1

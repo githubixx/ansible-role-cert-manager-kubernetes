@@ -1,13 +1,14 @@
 ---
 - name: Include prerequisites
-  include_tasks: "tasks/prerequisites.yml"
+  ansible.builtin.include_tasks:
+    file: prerequisites.yml
 
 - name: Create values
-  set_fact:
+  ansible.builtin.set_fact:
     cert_manager_values_rendered="{% for option in cert_manager_values %}--set {{ option }} {% endfor %}"
 
 - name: Install release
-  shell:
+  ansible.builtin.shell:
     set -o errexit
     set -o pipefail
     set -o nounset
@@ -25,7 +26,7 @@
     executable: "/bin/bash"
 
 - name: Waiting until cert-manager-webhooks pod is ready
-  k8s_info:
+  kubernetes.core.k8s_info:
     api_version: apps/v1
     kind: Deployment
     namespace: "{{ cert_manager_namespace }}"
