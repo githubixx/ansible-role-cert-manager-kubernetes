@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**7.1.0+1.9.1**
+
+- fix various `ansible-lint` issues
+
 **7.0.0+1.9.1**
 
 - update cert-manager to `v1.9.1`

@@ -1,6 +1,6 @@
 ---
 - name: Delete Let's Encrypt ClusterIssuer
-  k8s:
+  kubernetes.core.k8s:
     state: absent
     definition:
       apiVersion: cert-manager.io/v1
