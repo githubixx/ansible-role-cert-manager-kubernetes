@@ -33,6 +33,6 @@
     label_selectors:
       - app=webhook
   register: cert_manager_webhook_deployment_status
-  until: (cert_manager_webhook_deployment_status.resources[0].status.readyReplicas | default(0) | int ) >= 1
+  until: (cert_manager_webhook_deployment_status.resources[0].status.readyReplicas | default(0) | int) >= 1
   retries: 30
   delay: 15
