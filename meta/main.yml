@@ -1,25 +1,26 @@
+---
 galaxy_info:
   author: Robert Wimmer
   description: Ansible role to install Jetstack cert-manager in a Kubernetes cluster
   license: GPLv3
-  min_ansible_version: 2.9
+  min_ansible_version: "2.9"
   role_name: cert_manager_kubernetes
   namespace: githubixx
   platforms:
     - name: ArchLinux
     - name: Ubuntu
       versions:
-        - bionic
-        - focal
+        - "bionic"
+        - "focal"
     - name: Debian
       versions:
-        - buster
+        - "buster"
     - name: Fedora
       versions:
-        - all
+        - "all"
     - name: EL
       versions:
-        - all
+        - "all"
   galaxy_tags:
     - kubernetes
     - k8s
