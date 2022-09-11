@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**7.2.0+1.9.1**
+
+- add Github release action to push new release to Ansible Galaxy
+
 **7.1.0+1.9.1**
 
 - fix various `ansible-lint` issues
