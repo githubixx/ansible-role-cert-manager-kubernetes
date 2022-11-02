@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**7.3.0+1.10.0**
+
+- update cert-manager to `v1.10.0`
+
 **7.2.0+1.9.1**
 
 - add Github release action to push new release to Ansible Galaxy
