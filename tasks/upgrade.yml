@@ -5,7 +5,7 @@
 
 - name: Create values
   ansible.builtin.set_fact:
-    cert_manager_values_rendered="{% for option in cert_manager_values %}--set {{ option }} {% endfor %}"
+    cert_manager_values_rendered: "{% for option in cert_manager_values %}--set {{ option }} {% endfor %}"
 
 - name: Upgrade release
   ansible.builtin.shell:
