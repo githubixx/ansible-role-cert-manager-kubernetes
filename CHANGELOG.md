@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+**8.0.0+1.11.0**
+
+- update cert-manager to `v1.11.0`
+- add `.yamlint`
+- Avoid using free-form when calling module actions (ansible.builtin.set_fact)
+
 **7.3.1+1.10.1**
 
 - update cert-manager to `v1.10.1`

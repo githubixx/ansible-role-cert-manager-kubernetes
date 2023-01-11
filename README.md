@@ -25,7 +25,7 @@ Role Variables
 
 ```yaml
 # Helm chart version
-cert_manager_chart_version: "v1.10.1"
+cert_manager_chart_version: "v1.11.0"
 
 # Helm release name
 cert_manager_release_name: "cert-manager"
@@ -210,6 +210,7 @@ Example Playbook
 Example 1 (without role tag):
 
 ```yaml
+---
 - hosts: cert_manager
   roles:
     - githubixx.cert_manager_kubernetes
@@ -218,6 +219,7 @@ Example 1 (without role tag):
 Example 2 (assign tag to role):
 
 ```yaml
+---
 -
   hosts: cert_manager
   roles:
