@@ -210,6 +210,7 @@ Example Playbook
 Example 1 (without role tag):
 
 ```yaml
+---
 - hosts: cert_manager
   roles:
     - githubixx.cert_manager_kubernetes
@@ -218,6 +219,7 @@ Example 1 (without role tag):
 Example 2 (assign tag to role):
 
 ```yaml
+---
 -
   hosts: cert_manager
   roles:
