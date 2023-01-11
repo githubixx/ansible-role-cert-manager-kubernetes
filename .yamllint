@@ -1,0 +1,12 @@
+---
+# Copyright (C) 2023 Robert Wimmer
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+extends: default
+
+rules:
+  line-length:
+    max: 160
+    level: warning
+
+  comments-indentation: disable
