@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**8.0.1+1.11.1**
+
+- update cert-manager to `v1.11.1`
+
 **8.0.0+1.11.0**
 
 - update cert-manager to `v1.11.0`
