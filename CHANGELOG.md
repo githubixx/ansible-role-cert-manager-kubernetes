@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+**9.0.0+1.12.6**
+
+Please read `cert-manager` `v1.12` [changelog](https://cert-manager.io/docs/releases/release-notes/release-notes-1.12/) before upgrading!
+
+- update cert-manager to `v1.12.6`
+
 **8.0.1+1.11.1**
 
 - update cert-manager to `v1.11.1`
