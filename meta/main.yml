@@ -10,11 +10,12 @@ galaxy_info:
     - name: ArchLinux
     - name: Ubuntu
       versions:
-        - "bionic"
         - "focal"
+        - "jammy"
     - name: Debian
       versions:
-        - "buster"
+        - "bullseye"
+        - "bookworm"
     - name: Fedora
       versions:
         - "all"
