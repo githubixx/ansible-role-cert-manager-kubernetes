@@ -6,12 +6,20 @@ This Ansible role installs [cert-manager](https://cert-manager.io/) on a Kuberne
 Versions
 --------
 
-I tag every release and try to stay with [semantic versioning](http://semver.org). If you want to use the role I recommend to checkout the latest tag. The master branch is basically development while the tags mark stable releases. But in general I try to keep master in good shape too. A tag `10.0.0+1.13.2` means this is release `10.0.0` of this role and it contains cert-manager chart version `1.13.2`. If the role itself changes `X.Y.Z` before `+` will increase. If the cert-manager chart version changes `X.Y.Z` after `+` will increase too. This allows to tag bugfixes and new major versions of the role while it's still developed for a specific cert-manager release.
+I tag every release and try to stay with [semantic versioning](http://semver.org). If you want to use the role I recommend to checkout the latest tag. The master branch is basically development while the tags mark stable releases. But in general I try to keep master in good shape too. A tag `10.0.1+1.13.3` means this is release `10.0.1` of this role and it contains cert-manager chart version `1.13.3`. If the role itself changes `X.Y.Z` before `+` will increase. If the cert-manager chart version changes `X.Y.Z` after `+` will increase too. This allows to tag bugfixes and new major versions of the role while it's still developed for a specific cert-manager release.
 
 Requirements
 ------------
 
-You need to have [Helm 3](https://helm.sh/) binary installed on that host where `ansible-playbook` runs. You can either try to use your favorite package manager if your distribution includes `helm` in its repository or use one of the Ansible `Helm` roles (e.g. https://galaxy.ansible.com/gantsign/helm) or directly download the binary from https://github.com/helm/helm/releases and put it into `/usr/local/bin/` directory e.g. For Archlinux Helm can be installed via `sudo pacman -S helm` e.g.
+You need to have [Helm 3](https://helm.sh/) binary installed on that host where `ansible-playbook` is executed. You can either
+
+- use your favorite package manager if your distribution includes `helm` in its repository (for Archlinux use `sudo pacman -S helm` e.g.)
+- or use one of the Ansible `Helm` roles (e.g. [helm](https://galaxy.ansible.com/gantsign/helm) - which gets also installed if you use `ansible-galaxy role install -vr requirements.yml`
+- or directly download the binary from [Helm releases)[https://github.com/helm/helm/releases]) and put it into `/usr/local/bin/` directory e.g.
+
+A properly configured `KUBECONFIG` is also needed (which is located at `${HOME}/.kube/config` by default). Normally if `kubectl` works with your cluster then everything should be already fine in this regards.
+
+Additionally the Ansible `kubernetes.core` collection needs to be installed. This can be done by using the `collections.yml` file included in this role: `ansible-galaxy install -r collections.yml`.
 
 And of course you need a Kubernetes Cluster ;-)
 
@@ -25,7 +33,7 @@ Role Variables
 
 ```yaml
 # Helm chart version
-cert_manager_chart_version: "v1.13.2"
+cert_manager_chart_version: "v1.13.3"
 
 # Helm release name
 cert_manager_release_name: "cert-manager"
@@ -159,7 +167,7 @@ letsencrypt-prod      True    10m
 letsencrypt-staging   True    11m
 ```
 
-Afterwards a certificate can be issued. This happens outside of this Ansible role. E.g. to get a certificate for domain `www.domain.name` from Let's Encrypt staging server (this one is only for testing and doesn't issue a valid certificate that browser will accept) create a YAML file (e.g. domain-name.yaml) like this:
+Afterwards a certificate can be issued. This happens outside of this Ansible role. E.g. to get a certificate for domain `www.domain.name` from Let's Encrypt staging server (this one is only for testing and doesn't issue a valid certificate that browsers will accept) create a YAML file (e.g. domain-name.yaml) like this:
 
 ```yaml
 ---
@@ -178,7 +186,7 @@ spec:
     kind: ClusterIssuer
 ```
 
-After changing the values to your needs, apply this file with `kubectl apply -f domain-name.yaml`.
+After changing the values to your needs, apply this file with `kubectl --namespace <...> apply -f domain-name.yaml`.
 
 If you request a `(Cluster)Issuer` or a `Certificate` you can watch `cert-manager` logs to see what's going on e.g. (of course replace `cert-manager-76d899dd6c-8q8b` with the name of your `cert-manager` pod and in case you use a different namespace for `cert-manager` also change the namespace accordingly):
 
