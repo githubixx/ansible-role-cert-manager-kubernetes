@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+**10.0.2+1.13.3**
+
+- replace all dashes with underscores in role name in Github workflow
+- update `meta/main.yml`
+
 **10.0.1+1.13.3**
 
 Please read `cert-manager` `v1.13` [release notes](https://cert-manager.io/docs/releases/release-notes/release-notes-1.13/) and [changelog](https://github.com/cert-manager/cert-manager/releases/tag/v1.13.0) before upgrading!
