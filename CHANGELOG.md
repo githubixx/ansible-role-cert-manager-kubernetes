@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+**10.0.1+1.13.3**
+
+Please read `cert-manager` `v1.13` [release notes](https://cert-manager.io/docs/releases/release-notes/release-notes-1.13/) and [changelog](https://github.com/cert-manager/cert-manager/releases/tag/v1.13.0) before upgrading!
+
+**IMPORTANT NOTE**: If upgrading from a version below `v1.12`, upgrade to the latest `v1.12` release before upgrading to `v1.13`. Otherwise, some certificates may be unexpectedly re-issued.
+
+- update cert-manager to `v1.13.3`
+
 **10.0.0+1.13.2**
 
 Please read `cert-manager` `v1.13` [release notes](https://cert-manager.io/docs/releases/release-notes/release-notes-1.13/) and [changelog](https://github.com/cert-manager/cert-manager/releases/tag/v1.13.0) before upgrading!
