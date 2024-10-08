@@ -2,11 +2,17 @@
 
 ## 11.0.0+1.15.3
 
+**Note:** Please read the [cert-manager release notes](https://cert-manager.io/docs/releases/release-notes/release-notes-1.15/) for `v1.15` before upgrading!
+
+- **Potentially breaking**
+  - `installCRDs` Helm chart option is deprecated. Previously it was set to `true` by default. So the Custom Resource Definitions (CRDs) needed by `cert-manager` were installed automatically. This was replaced by `crds.enabled=true` which means that the previous default behavior haven't changed. Addtionally `crds.keep=true` was added. If the `cert-manager` gets deleted by deleting the Helm chart e.g. then the CRDs will be kept. This is to prevent accidental data loss.
+
 - **Update**
   - update cert-manager to `v1.15.3`
 
 - **Other**
   - update `.yamllint`
+  - add `.gitignore`
 
 ## 10.0.2+1.13.3
 
