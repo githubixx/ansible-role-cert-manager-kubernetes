@@ -53,7 +53,8 @@ cert_manager_namespace: "cert-manager"
 # If enabled, when uninstalling CRD resources will be deleted causing all
 # installed custom resources to be DELETED.
 cert_manager_values:
-  - installCRDs=true
+  - crds.enabled=true
+  - crds.keep=true
   - global.leaderElection.namespace="{{ cert_manager_namespace }}"
 
 # If your Kubernetes control plane (`kube-apiserver` e.g.) has no route to the
