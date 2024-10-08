@@ -1,6 +1,6 @@
 ---
 # Helm chart version
-cert_manager_chart_version: "v1.13.3"
+cert_manager_chart_version: "v1.15.3"
 
 # Helm release name
 cert_manager_release_name: "cert-manager"
@@ -20,12 +20,16 @@ cert_manager_namespace: "cert-manager"
 # The following table contains the configurable parameters of the cert-manager
 # chart and their default values. For all possible values see:
 # https://artifacthub.io/packages/helm/cert-manager/cert-manager#configuration
-# But for most users "installCRDs=true" should be sufficient.
-# If true, CRD resources will be installed as part of the Helm chart.
-# If enabled, when uninstalling CRD resources will be deleted causing all
-# installed custom resources to be DELETED
+#
+# The following default settings should be a good starting point for most users:
+#
+# - crds.enabled: If true, CRD resources will be installed as part of the Helm chart.
+# - crds.keep: If true, CRD resources will not be deleted when uninstalling the Helm chart.
+#              If false, uninstalling CRD resources will be deleted causing all
+#              installed custom resources to be DELETED!
 cert_manager_values:
-  - installCRDs=true
+  - crds.enabled=true
+  - crds.keep=true
   - global.leaderElection.namespace="{{ cert_manager_namespace }}"
 
 # If your Kubernetes control plane (`kube-apiserver` e.g.) has no route to the
