@@ -1,15 +1,12 @@
-cert-manager-kubernetes
-=======================
+# cert-manager-kubernetes
 
 This Ansible role installs [cert-manager](https://cert-manager.io/) on a Kubernetes cluster. Behind the doors it uses the official [Helm chart](https://charts.jetstack.io). Currently procedures like installing, upgrading and deleting the cert-manager deployment are supported.
 
-Versions
---------
+## Versions
 
-I tag every release and try to stay with [semantic versioning](http://semver.org). If you want to use the role I recommend to checkout the latest tag. The master branch is basically development while the tags mark stable releases. But in general I try to keep master in good shape too. A tag `10.0.1+1.13.3` means this is release `10.0.1` of this role and it contains cert-manager chart version `1.13.3`. If the role itself changes `X.Y.Z` before `+` will increase. If the cert-manager chart version changes `X.Y.Z` after `+` will increase too. This allows to tag bugfixes and new major versions of the role while it's still developed for a specific cert-manager release.
+I tag every release and try to stay with [semantic versioning](http://semver.org). If you want to use the role I recommend to checkout the latest tag. The master branch is basically development while the tags mark stable releases. But in general I try to keep master in good shape too. A tag `11.0.0+1.15.3` means this is release `11.0.0` of this role and it contains cert-manager chart version `1.15.3`. If the role itself changes `X.Y.Z` before `+` will increase. If the cert-manager chart version changes `X.Y.Z` after `+` will increase too. This allows to tag bugfixes and new major versions of the role while it's still developed for a specific cert-manager release.
 
-Requirements
-------------
+## Requirements
 
 You need to have [Helm 3](https://helm.sh/) binary installed on that host where `ansible-playbook` is executed. You can either
 
@@ -23,17 +20,15 @@ Additionally the Ansible `kubernetes.core` collection needs to be installed. Thi
 
 And of course you need a Kubernetes Cluster ;-)
 
-Changelog
----------
+## Changelog
 
 see [CHANGELOG](https://github.com/githubixx/ansible-role-cert-manager-kubernetes/blob/master/CHANGELOG.md)
 
-Role Variables
---------------
+## Role Variables
 
 ```yaml
 # Helm chart version
-cert_manager_chart_version: "v1.13.3"
+cert_manager_chart_version: "v1.15.3"
 
 # Helm release name
 cert_manager_release_name: "cert-manager"
@@ -111,8 +106,7 @@ cert_manager_values:
 #     solvers_http01_ingress_class: "traefik"
 ```
 
-Usage
------
+## Usage
 
 First check if you want to change any of the default values in `default/main.yml`. As usual those values can be overridden in `host_vars` or `group_vars`. Normally there is no need to change that much. Besides the `cert_manager_chart_version` you might want do add a few options to `cert_manager_values`. It contains the configurable parameters of the cert-manager Helm chart. The list is submitted "as is" to `helm` binary for `template`, `install` or `upgrade` commands.
 
@@ -146,8 +140,7 @@ And finally if you want to get rid of cert-manager you can delete all resources 
 ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete k8s.yml
 ```
 
-Issuer
-------
+## Issuer
 
 The role currently supports deploying a [ClusterIssuer](https://cert-manager.io/docs/concepts/issuer/) for [Let's Encrypt](https://letsencrypt.org/) (LE) for LE staging and production. The most relevant variable in this case is `cert_manager_le_clusterissuer_options`. Please see the role variables above for more information.
 
@@ -206,14 +199,7 @@ And in case you want to delete the `ClusterIssuer` use:
 ansible-playbook --tags=role-cert-manager-kubernetes --extra-vars action=delete-issuer k8s.yml
 ```
 
-TODO
-----
-
-- [ ] add option to install cert-manager plugin for `kubectl`
-- [ ] add more error checks
-
-Example Playbook
-----------------
+## Example Playbook
 
 Example 1 (without role tag):
 
@@ -235,12 +221,10 @@ Example 2 (assign tag to role):
       tags: role-cert-manager-kubernetes
 ```
 
-License
--------
+## License
 
 GNU GENERAL PUBLIC LICENSE Version 3
 
-Author Information
-------------------
+## Author Information
 
 [http://www.tauceti.blog](http://www.tauceti.blog)
