@@ -5,6 +5,9 @@
 - **Update**
   - update cert-manager to `v1.15.3`
 
+- **Other**
+  - update `.yamllint`
+
 ## 10.0.2+1.13.3
 
 - replace all dashes with underscores in role name in Github workflow
