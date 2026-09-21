@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.0.0+1.18.6
+
+Please read the cert-manager [v1.17 to v1.18 upgrade notes](https://cert-manager.io/docs/releases/upgrading/upgrading-1.17-1.18/) before upgrading!
+
+- **Update**
+  - update cert-manager to `v1.18.6`
+
 ## 13.0.0+1.17.4
 
 Please read the cert-manager [v1.16 to v1.17 upgrade notes](https://cert-manager.io/docs/releases/upgrading/upgrading-1.16-1.17/) before upgrading!
