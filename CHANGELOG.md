@@ -1,5 +1,12 @@
 # Changelog
 
+## 17.0.0+1.21.2
+
+Please read the cert-manager [v1.20 to v1.21 upgrade notes](https://cert-manager.io/docs/releases/upgrading/upgrading-1.20-1.21/) before upgrading!
+
+- **Update**
+  - update cert-manager to `v1.21.2`
+
 ## 16.0.0+1.20.4
 
 Please read the cert-manager [v1.19 to v1.20 upgrade notes](https://cert-manager.io/docs/releases/upgrading/upgrading-1.19-1.20/) before upgrading!
